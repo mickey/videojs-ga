@@ -13,7 +13,7 @@ In your web page:
 <script>
 videojs('video', {}, function() {
   var player = this;
-  player.ga(); // "load the plugin"
+  player.ga(); // "load the plugin, by defaults tracks everything!!"
 });
 </script>
 ```
