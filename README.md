@@ -40,29 +40,34 @@ The following options are supported:
 
 ####eventCategory
 
-This is the ```category``` sent to GA. If you don't know what it is please check [GA's doc](https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide)  
+This is the ```category``` sent to GA. If you don't know what it is please check [GA's doc](https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide)
 **default:** ```'Video'```
 
 
 ####eventLabel
 
-This is the ```label``` sent to GA. If you don't know what it is please check [GA's doc](https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide)  
-**default:** basename of the video path so if the path is ```http://s3.amazonaws.com/pouet.mp4``` the label would be ```pouet```    
+This is the ```label``` sent to GA. If you don't know what it is please check [GA's doc](https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide)
+**default:** basename of the video path so if the path is ```http://s3.amazonaws.com/pouet.mp4``` the label would be ```pouet```
 
 ####eventsToTrack
 
-The events you want to track. Most of this events are videojs events. Some of them might reflects my needs.  
-I'm open to add some more if you care to provide a good use case or a pull request.  
+The events you want to track. Most of this events are videojs events. Some of them might reflects my needs.
+I'm open to add some more if you care to provide a good use case or a pull request.
 **default:** every events
-  ```[ 'loaded', 'percentsPlayed', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen']```
+  ```[ 'loaded', 'percentsPlayed', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen', 'srcType']```
+
+Most of the events are selft explanatory, here's the ones that may need more details:
+
+- ```srcType```: will send the engine along with the source type being played. exemple: ```html5/mp4```
+- ```percentsPlayed```: will send an every X percents. X being defined by the option ```percentsPlayedInterval```.
 
 ####percentsPlayedInterval
 
-This options goes with the ```percentsPlayed``` event. Every ```percentsPlayedInterval``` percents an event will be sent to GA.  
+This options goes with the ```percentsPlayed``` event. Every ```percentsPlayedInterval``` percents an event will be sent to GA.
 **default:** 10
 
 
 ## TODO
 
-- [ ] track the engine used (html5/flash) along with the source (ogg, mp4, ...)
+- [x] track the engine used (html5/flash) along with the source (ogg, mp4, ...)
 - [ ] track the time to download the video

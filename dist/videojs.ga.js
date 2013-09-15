@@ -10,7 +10,7 @@
         dataSetupOptions = parsedOptions.ga;
       }
     }
-    deafultsEventsToTrack = ['loaded', 'percentsPlayed', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen'];
+    deafultsEventsToTrack = ['loaded', 'percentsPlayed', 'start', 'srcType', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen'];
     eventsToTrack = options.eventsToTrack || dataSetupOptions.eventsToTrack || deafultsEventsToTrack;
     percentsPlayedInterval = options.percentsPlayedInterval || dataSetupOptions.percentsPlayedInterval || 10;
     eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video';
@@ -19,11 +19,17 @@
     seekStart = seekEnd = 0;
     seeking = false;
     loaded = function() {
+      var sourceType, tmpSrcArray;
       if (!eventLabel) {
         eventLabel = this.currentSrc().split("/").slice(-1)[0].replace(/\.(\w{3,4})(\?.*)?$/i, '');
       }
       if (__indexOf.call(eventsToTrack, "loadedmetadata") >= 0) {
         _gaq.push(['_trackEvent', eventCategory, 'loadedmetadata', eventLabel]);
+      }
+      if (__indexOf.call(eventsToTrack, "srcType") >= 0) {
+        tmpSrcArray = this.currentSrc().split(".");
+        sourceType = tmpSrcArray[tmpSrcArray.length - 1];
+        _gaq.push(['_trackEvent', eventCategory, 'srcType', "" + this.techName + "/" + sourceType]);
       }
     };
     timeupdate = function() {

@@ -14,7 +14,7 @@ vjs.plugin 'ga', (options) ->
     dataSetupOptions = parsedOptions.ga if parsedOptions.ga
 
   deafultsEventsToTrack = [
-    'loaded', 'percentsPlayed', 'start',
+    'loaded', 'percentsPlayed', 'start', 'srcType'
     'end', 'seek', 'play', 'pause', 'resize',
     'volumeChange', 'error', 'fullscreen'
   ]
@@ -33,8 +33,15 @@ vjs.plugin 'ga', (options) ->
   loaded = ->
     unless eventLabel
       eventLabel = @currentSrc().split("/").slice(-1)[0].replace(/\.(\w{3,4})(\?.*)?$/i,'')
+
     if "loadedmetadata" in eventsToTrack
       _gaq.push(['_trackEvent', eventCategory, 'loadedmetadata', eventLabel])
+
+    if "srcType" in eventsToTrack
+      tmpSrcArray = @currentSrc().split(".")
+      sourceType = tmpSrcArray[tmpSrcArray.length - 1]
+      _gaq.push(['_trackEvent', eventCategory, 'srcType', "#{@techName}/#{sourceType}"])
+
     return
 
   timeupdate = ->
