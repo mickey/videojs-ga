@@ -59,7 +59,7 @@ I'm open to add some more if you care to provide a good use case or a pull reque
 Most of the events are selft explanatory, here's the ones that may need more details:
 
 - ```srcType```: will send the engine along with the source type being played. exemple: ```html5/mp4```
-- ```percentsPlayed```: will send an every X percents. X being defined by the option ```percentsPlayedInterval```.
+- ```percentsPlayed```: will send an event every X percents. X being defined by the option ```percentsPlayedInterval```.
 
 ####percentsPlayedInterval
 
