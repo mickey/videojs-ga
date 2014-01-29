@@ -99,7 +99,7 @@ videojs.plugin 'ga', (options) ->
     return
 
   resize = ->
-    sendbeacon( 'resize - ' + "#{@width}*#{@height}", true )
+    sendbeacon( 'resize - ' + @width() + "*" + @height(), true )
     return
 
   error = ->

@@ -85,7 +85,7 @@
       sendbeacon('volume change', false, volume);
     };
     resize = function() {
-      sendbeacon('resize - ' + ("" + this.width + "*" + this.height), true);
+      sendbeacon('resize - ' + this.width() + "*" + this.height(), true);
     };
     error = function() {
       var currentTime;
