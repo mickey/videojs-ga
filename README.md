@@ -66,6 +66,11 @@ Most of the events are selft explanatory, here's the ones that may need more det
 This options goes with the ```percentsPlayed``` event. Every ```percentsPlayedInterval``` percents an event will be sent to GA.
 **default:** 10
 
+####gaLibrary
+
+This plugin supports the ga.js and the newer analytics.js Google Analytics libraries. If you're using the newer ```anlytics.js``` library set this options to ```'analytics.js'```.
+**default:** ```ga.js```
+
 
 ## TODO
 

@@ -24,7 +24,10 @@ videojs.plugin 'ga', (options) ->
   eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video'
   # if you didn't specify a name, it will be 'guessed' from the video src after metadatas are loaded
   eventLabel = options.eventLabel || dataSetupOptions.eventLabel
-
+  
+  # determine if we are using ga.js or analytics.js
+  gaLibrary = options.gaLibrary || dataSetupOptions.gaLibrary || 'ga.js'
+  
   # init a few variables
   percentsAlreadyTracked = []
   seekStart = seekEnd = 0
@@ -35,12 +38,12 @@ videojs.plugin 'ga', (options) ->
       eventLabel = @currentSrc().split("/").slice(-1)[0].replace(/\.(\w{3,4})(\?.*)?$/i,'')
 
     if "loadedmetadata" in eventsToTrack
-      _gaq.push(['_trackEvent', eventCategory, 'loadedmetadata', eventLabel])
+      sendbeacon( 'loadedmetadata', true )
 
     if "srcType" in eventsToTrack
       tmpSrcArray = @currentSrc().split(".")
       sourceType = tmpSrcArray[tmpSrcArray.length - 1]
-      _gaq.push(['_trackEvent', eventCategory, 'srcType', "#{@techName}/#{sourceType}"])
+      sendbeacon( 'source type - ' + "#{@techName}/#{sourceType}", true )
 
     return
 
@@ -53,9 +56,9 @@ videojs.plugin 'ga', (options) ->
       if percentPlayed >= percent && percent not in percentsAlreadyTracked
 
         if "start" in eventsToTrack && percent == 0 && percentPlayed > 0
-          _gaq.push(['_trackEvent', eventCategory, "start", eventLabel])
+          sendbeacon( 'start', true )
         else if "percentsPlayed" in eventsToTrack && percentPlayed != 0
-          _gaq.push(['_trackEvent', eventCategory, "#{percent}%", eventLabel])
+          sendbeacon( 'percent played', true, percent )
 
         if percentPlayed > 0
           percentsAlreadyTracked.push(percent)
@@ -66,19 +69,19 @@ videojs.plugin 'ga', (options) ->
       # if the difference between the start and the end are greater than 1 it's a seek.
       if Math.abs(seekStart - seekEnd) > 1
         seeking = true
-        _gaq.push(['_trackEvent', eventCategory, 'seek start', eventLabel, seekStart])
-        _gaq.push(['_trackEvent', eventCategory, 'seek end', eventLabel, seekEnd])
+        sendbeacon( 'seek start', false, seekStart )
+        sendbeacon( 'seek end', false, seekEnd )
 
     return
 
   end = ->
-    _gaq.push(['_trackEvent', eventCategory, "end", eventLabel])
+    sendbeacon( 'end', true )
     return
 
   play = ->
     currentTime = Math.round(@currentTime())
     if currentTime > 0 && !seeking
-      _gaq.push(['_trackEvent', eventCategory, 'play', eventLabel, currentTime])
+      sendbeacon( 'play', true, currentTime )
     seeking = true
     return
 
@@ -86,33 +89,47 @@ videojs.plugin 'ga', (options) ->
     currentTime = Math.round(@currentTime())
     duration = Math.round(@duration())
     if currentTime != duration && !seeking
-      _gaq.push(['_trackEvent', eventCategory, 'pause', eventLabel, currentTime])
+      sendbeacon( 'pause', false, currentTime )
     return
 
   # value between 0 (muted) and 1
   volumeChange = ->
     volume = if @muted() == true then 0 else @volume()
-    _gaq.push(['_trackEvent', eventCategory, 'volumeChange', eventLabel, volume])
+    sendbeacon( 'volume change', false, volume )
     return
 
   resize = ->
-    _gaq.push(['_trackEvent', eventCategory, 'resize', eventLabel, "#{@width}*#{@height}"])
+    sendbeacon( 'resize - ' + @width() + "*" + @height(), true )
     return
 
   error = ->
     currentTime = Math.round(@currentTime())
     # XXX: Is there some informations about the error somewhere ?
-    _gaq.push(['_trackEvent', eventCategory, 'error', eventLabel, currentTime])
+    sendbeacon( 'error', true, currentTime )
     return
 
   fullscreen = ->
     currentTime = Math.round(@currentTime())
     if @isFullScreen
-      _gaq.push(['_trackEvent', eventCategory, 'enter fullscreen', eventLabel, currentTime])
+      sendbeacon( 'enter fullscreen', false, currentTime )
     else
-      _gaq.push(['_trackEvent', eventCategory, 'exit fullscreen', eventLabel, currentTime])
+      sendbeacon( 'exit fullscreen', false, currentTime )
     return
-
+  
+  sendbeacon = ( action, nonInteraction, value ) ->
+    try
+      if 'analytics.js' == gaLibrary
+        ga('send', 'event', {
+          'eventCategory' 	: eventCategory,
+          'eventAction'		  : action,
+          'eventLabel'		  : eventLabel,
+          'eventValue'      : value,
+          'nonInteraction'	: nonInteraction
+        });
+      else
+        _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction])
+    return
+  
   @on("loadedmetadata", loaded)
   @on("timeupdate", timeupdate)
   @on("ended", end) if "end" in eventsToTrack
