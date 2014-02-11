@@ -13,12 +13,12 @@ videojs.plugin 'ga', (options) ->
     parsedOptions = JSON.parse(@options()["data-setup"])
     dataSetupOptions = parsedOptions.ga if parsedOptions.ga
 
-  deafultsEventsToTrack = [
+  defaultsEventsToTrack = [
     'loaded', 'percentsPlayed', 'start', 'srcType'
     'end', 'seek', 'play', 'pause', 'resize',
     'volumeChange', 'error', 'fullscreen'
   ]
-  eventsToTrack = options.eventsToTrack || dataSetupOptions.eventsToTrack || deafultsEventsToTrack
+  eventsToTrack = options.eventsToTrack || dataSetupOptions.eventsToTrack || defaultsEventsToTrack
   percentsPlayedInterval = options.percentsPlayedInterval || dataSetupOptions.percentsPlayedInterval || 10
 
   eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video'
