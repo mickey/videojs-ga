@@ -43,7 +43,8 @@ videojs.plugin 'ga', (options = {}) ->
     if "srcType" in eventsToTrack
       tmpSrcArray = @currentSrc().split(".")
       sourceType = tmpSrcArray[tmpSrcArray.length - 1]
-      sendbeacon( 'source type - ' + "#{@techName}/#{sourceType}", true )
+      techName = @contentEl().getElementsByClassName("vjs-tech")[0].id
+      sendbeacon( 'source type - ' + "#{techName}/#{sourceType}", true )
 
     return
 

@@ -1,5 +1,5 @@
 /*
-* videojs-ga - v0.3.0 - 2014-05-23
+* videojs-ga - v0.1.0 - 2014-05-23
 * Copyright (c) 2014 Michael Bensoussan
 * Licensed MIT
 */
@@ -28,7 +28,7 @@
     seekStart = seekEnd = 0;
     seeking = false;
     loaded = function() {
-      var sourceType, tmpSrcArray;
+      var sourceType, techName, tmpSrcArray;
       if (!eventLabel) {
         eventLabel = this.currentSrc().split("/").slice(-1)[0].replace(/\.(\w{3,4})(\?.*)?$/i, '');
       }
@@ -38,7 +38,8 @@
       if (__indexOf.call(eventsToTrack, "srcType") >= 0) {
         tmpSrcArray = this.currentSrc().split(".");
         sourceType = tmpSrcArray[tmpSrcArray.length - 1];
-        sendbeacon('source type - ' + ("" + this.techName + "/" + sourceType), true);
+        techName = this.contentEl().getElementsByClassName("vjs-tech")[0].id;
+        sendbeacon('source type - ' + ("" + techName + "/" + sourceType), true);
       }
     };
     timeupdate = function() {
