@@ -104,7 +104,7 @@
     fullscreen = function() {
       var currentTime;
       currentTime = Math.round(this.currentTime());
-      if (this.isFullScreen) {
+      if (this.isFullscreen()) {
         sendbeacon('enter fullscreen', false, currentTime);
       } else {
         sendbeacon('exit fullscreen', false, currentTime);
