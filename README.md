@@ -12,8 +12,7 @@ In your web page:
 <script src="dist/videojs.ga.min.js"></script>
 <script>
 videojs('video', {}, function() {
-  var player = this;
-  player.ga(); // "load the plugin, by defaults tracks everything!!"
+  this.ga(); // "load the plugin, by defaults tracks everything!!"
 });
 </script>
 ```

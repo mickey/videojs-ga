@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>videojs-ga DEMO</title>
+    <link href="../libs/video-js-4.6.1/video-js.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="../libs/video-js-4.6.1/video.js"></script>
+    <script src="../dist/videojs.ga.js"></script>
+  </head>
+
+  <body>
+    <video id="video" controls preload="none" class="video-js vjs-default-skin" width="640" height="480">
+      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+      <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+    </video>
+
+    <script>
+      videojs('video', {}, function() {
+        this.ga();
+      });
+    </script>
+
+  </body>
+</html>
