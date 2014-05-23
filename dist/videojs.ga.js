@@ -1,8 +1,16 @@
+/*
+* videojs-ga - v0.3.0 - 2014-05-23
+* Copyright (c) 2014 Michael Bensoussan
+* Licensed MIT
+*/
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   videojs.plugin('ga', function(options) {
     var dataSetupOptions, defaultsEventsToTrack, end, error, eventCategory, eventLabel, eventsToTrack, fullscreen, gaLibrary, loaded, parsedOptions, pause, percentsAlreadyTracked, percentsPlayedInterval, play, resize, seekEnd, seekStart, seeking, sendbeacon, timeupdate, volumeChange;
+    if (options == null) {
+      options = {};
+    }
     dataSetupOptions = {};
     if (this.options()["data-setup"]) {
       parsedOptions = JSON.parse(this.options()["data-setup"]);

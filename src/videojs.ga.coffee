@@ -6,7 +6,7 @@
 # Licensed under the MIT license.
 ##
 
-videojs.plugin 'ga', (options) ->
+videojs.plugin 'ga', (options = {}) ->
   # this loads options from the data-setup attribute of the video tag
   dataSetupOptions = {}
   if @options()["data-setup"]
@@ -24,10 +24,10 @@ videojs.plugin 'ga', (options) ->
   eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video'
   # if you didn't specify a name, it will be 'guessed' from the video src after metadatas are loaded
   eventLabel = options.eventLabel || dataSetupOptions.eventLabel
-  
+
   # determine if we are using ga.js or analytics.js
   gaLibrary = options.gaLibrary || dataSetupOptions.gaLibrary || 'ga.js'
-  
+
   # init a few variables
   percentsAlreadyTracked = []
   seekStart = seekEnd = 0
@@ -115,7 +115,7 @@ videojs.plugin 'ga', (options) ->
     else
       sendbeacon( 'exit fullscreen', false, currentTime )
     return
-  
+
   sendbeacon = ( action, nonInteraction, value ) ->
     try
       if 'analytics.js' == gaLibrary
@@ -129,7 +129,7 @@ videojs.plugin 'ga', (options) ->
       else
         _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction])
     return
-  
+
   @on("loadedmetadata", loaded)
   @on("timeupdate", timeupdate)
   @on("ended", end) if "end" in eventsToTrack
