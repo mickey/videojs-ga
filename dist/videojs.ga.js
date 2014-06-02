@@ -1,5 +1,5 @@
 /*
-* videojs-ga - v0.3.0 - 2014-05-23
+* videojs-ga - v0.3.1 - 2014-06-02
 * Copyright (c) 2014 Michael Bensoussan
 * Licensed MIT
 */
@@ -7,7 +7,7 @@
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   videojs.plugin('ga', function(options) {
-    var dataSetupOptions, defaultsEventsToTrack, end, error, eventCategory, eventLabel, eventsToTrack, fullscreen, gaLibrary, loaded, parsedOptions, pause, percentsAlreadyTracked, percentsPlayedInterval, play, resize, seekEnd, seekStart, seeking, sendbeacon, timeupdate, volumeChange;
+    var dataSetupOptions, defaultsEventsToTrack, end, error, eventCategory, eventLabel, eventsToTrack, fullscreen, loaded, parsedOptions, pause, percentsAlreadyTracked, percentsPlayedInterval, play, resize, seekEnd, seekStart, seeking, sendbeacon, timeupdate, volumeChange;
     if (options == null) {
       options = {};
     }
@@ -23,7 +23,6 @@
     percentsPlayedInterval = options.percentsPlayedInterval || dataSetupOptions.percentsPlayedInterval || 10;
     eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video';
     eventLabel = options.eventLabel || dataSetupOptions.eventLabel;
-    gaLibrary = options.gaLibrary || dataSetupOptions.gaLibrary || 'ga.js';
     percentsAlreadyTracked = [];
     seekStart = seekEnd = 0;
     seeking = false;
@@ -111,19 +110,19 @@
       }
     };
     sendbeacon = function(action, nonInteraction, value) {
-      try {
-        if ('analytics.js' === gaLibrary) {
-          ga('send', 'event', {
-            'eventCategory': eventCategory,
-            'eventAction': action,
-            'eventLabel': eventLabel,
-            'eventValue': value,
-            'nonInteraction': nonInteraction
-          });
-        } else {
-          _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction]);
-        }
-      } catch (_error) {}
+      if (window.ga) {
+        ga('send', 'event', {
+          'eventCategory': eventCategory,
+          'eventAction': action,
+          'eventLabel': eventLabel,
+          'eventValue': value,
+          'nonInteraction': nonInteraction
+        });
+      } else if (window._gaq) {
+        _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction]);
+      } else {
+        console.log("Google Analytics not detected");
+      }
     };
     this.on("loadedmetadata", loaded);
     this.on("timeupdate", timeupdate);

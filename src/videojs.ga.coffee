@@ -25,9 +25,6 @@ videojs.plugin 'ga', (options = {}) ->
   # if you didn't specify a name, it will be 'guessed' from the video src after metadatas are loaded
   eventLabel = options.eventLabel || dataSetupOptions.eventLabel
 
-  # determine if we are using ga.js or analytics.js
-  gaLibrary = options.gaLibrary || dataSetupOptions.gaLibrary || 'ga.js'
-
   # init a few variables
   percentsAlreadyTracked = []
   seekStart = seekEnd = 0
@@ -118,17 +115,17 @@ videojs.plugin 'ga', (options = {}) ->
     return
 
   sendbeacon = ( action, nonInteraction, value ) ->
-    try
-      if 'analytics.js' == gaLibrary
-        ga('send', 'event', {
-          'eventCategory' 	: eventCategory,
-          'eventAction'		  : action,
-          'eventLabel'		  : eventLabel,
-          'eventValue'      : value,
-          'nonInteraction'	: nonInteraction
-        });
-      else
-        _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction])
+    if window.ga
+      ga 'send', 'event',
+        'eventCategory' 	: eventCategory
+        'eventAction'		  : action
+        'eventLabel'		  : eventLabel
+        'eventValue'      : value
+        'nonInteraction'	: nonInteraction
+    else if window._gaq
+      _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction])
+    else
+      console.log("Google Analytics not detected")
     return
 
   @on("loadedmetadata", loaded)
