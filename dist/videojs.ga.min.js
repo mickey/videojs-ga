@@ -1,5 +1,5 @@
 /*
-* videojs-ga - v0.3.1 - 2014-06-04
+* videojs-ga - v0.4.0 - 2014-06-04
 * Copyright (c) 2014 Michael Bensoussan
 * Licensed MIT
 */
