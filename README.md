@@ -53,11 +53,10 @@ This is the ```label``` sent to GA. If you don't know what it is please check [G
 The events you want to track. Most of this events are videojs events. Some of them might reflects my needs.
 I'm open to add some more if you care to provide a good use case or a pull request.
 **default:** every events
-  ```[ 'loaded', 'percentsPlayed', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen', 'srcType']```
+  ```[ 'loaded', 'percentsPlayed', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen']```
 
 Most of the events are selft explanatory, here's the ones that may need more details:
 
-- ```srcType```: will send the engine along with the source type being played. exemple: ```html5/mp4```
 - ```percentsPlayed```: will send an event every X percents. X being defined by the option ```percentsPlayedInterval```.
 
 ####percentsPlayedInterval

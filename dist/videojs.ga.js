@@ -18,7 +18,7 @@
         dataSetupOptions = parsedOptions.ga;
       }
     }
-    defaultsEventsToTrack = ['loaded', 'percentsPlayed', 'start', 'srcType', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen'];
+    defaultsEventsToTrack = ['loaded', 'percentsPlayed', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volumeChange', 'error', 'fullscreen'];
     eventsToTrack = options.eventsToTrack || dataSetupOptions.eventsToTrack || defaultsEventsToTrack;
     percentsPlayedInterval = options.percentsPlayedInterval || dataSetupOptions.percentsPlayedInterval || 10;
     eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video';
@@ -27,18 +27,11 @@
     seekStart = seekEnd = 0;
     seeking = false;
     loaded = function() {
-      var sourceType, techName, tmpSrcArray;
       if (!eventLabel) {
         eventLabel = this.currentSrc().split("/").slice(-1)[0].replace(/\.(\w{3,4})(\?.*)?$/i, '');
       }
       if (__indexOf.call(eventsToTrack, "loadedmetadata") >= 0) {
         sendbeacon('loadedmetadata', true);
-      }
-      if (__indexOf.call(eventsToTrack, "srcType") >= 0) {
-        tmpSrcArray = this.currentSrc().split(".");
-        sourceType = tmpSrcArray[tmpSrcArray.length - 1];
-        techName = this.contentEl().getElementsByClassName("vjs-tech")[0].id;
-        sendbeacon('source type - ' + ("" + techName + "/" + sourceType), true);
       }
     };
     timeupdate = function() {

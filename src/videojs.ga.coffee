@@ -14,7 +14,7 @@ videojs.plugin 'ga', (options = {}) ->
     dataSetupOptions = parsedOptions.ga if parsedOptions.ga
 
   defaultsEventsToTrack = [
-    'loaded', 'percentsPlayed', 'start', 'srcType'
+    'loaded', 'percentsPlayed', 'start',
     'end', 'seek', 'play', 'pause', 'resize',
     'volumeChange', 'error', 'fullscreen'
   ]
@@ -36,12 +36,6 @@ videojs.plugin 'ga', (options = {}) ->
 
     if "loadedmetadata" in eventsToTrack
       sendbeacon( 'loadedmetadata', true )
-
-    if "srcType" in eventsToTrack
-      tmpSrcArray = @currentSrc().split(".")
-      sourceType = tmpSrcArray[tmpSrcArray.length - 1]
-      techName = @contentEl().getElementsByClassName("vjs-tech")[0].id
-      sendbeacon( 'source type - ' + "#{techName}/#{sourceType}", true )
 
     return
 
