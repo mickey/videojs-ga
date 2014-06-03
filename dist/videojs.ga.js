@@ -1,5 +1,5 @@
 /*
-* videojs-ga - v0.3.1 - 2014-06-02
+* videojs-ga - v0.3.1 - 2014-06-04
 * Copyright (c) 2014 Michael Bensoussan
 * Licensed MIT
 */
@@ -77,7 +77,7 @@
       if (currentTime > 0 && !seeking) {
         sendbeacon('play', true, currentTime);
       }
-      seeking = true;
+      seeking = false;
     };
     pause = function() {
       var currentTime, duration;
@@ -124,29 +124,31 @@
         console.log("Google Analytics not detected");
       }
     };
-    this.on("loadedmetadata", loaded);
-    this.on("timeupdate", timeupdate);
-    if (__indexOf.call(eventsToTrack, "end") >= 0) {
-      this.on("ended", end);
-    }
-    if (__indexOf.call(eventsToTrack, "play") >= 0) {
-      this.on("play", play);
-    }
-    if (__indexOf.call(eventsToTrack, "pause") >= 0) {
-      this.on("pause", pause);
-    }
-    if (__indexOf.call(eventsToTrack, "volumeChange") >= 0) {
-      this.on("volumechange", volumeChange);
-    }
-    if (__indexOf.call(eventsToTrack, "resize") >= 0) {
-      this.on("resize", resize);
-    }
-    if (__indexOf.call(eventsToTrack, "error") >= 0) {
-      this.on("error", error);
-    }
-    if (__indexOf.call(eventsToTrack, "fullscreen") >= 0) {
-      this.on("fullscreenchange", fullscreen);
-    }
+    this.ready(function() {
+      this.on("loadedmetadata", loaded);
+      this.on("timeupdate", timeupdate);
+      if (__indexOf.call(eventsToTrack, "end") >= 0) {
+        this.on("ended", end);
+      }
+      if (__indexOf.call(eventsToTrack, "play") >= 0) {
+        this.on("play", play);
+      }
+      if (__indexOf.call(eventsToTrack, "pause") >= 0) {
+        this.on("pause", pause);
+      }
+      if (__indexOf.call(eventsToTrack, "volumeChange") >= 0) {
+        this.on("volumechange", volumeChange);
+      }
+      if (__indexOf.call(eventsToTrack, "resize") >= 0) {
+        this.on("resize", resize);
+      }
+      if (__indexOf.call(eventsToTrack, "error") >= 0) {
+        this.on("error", error);
+      }
+      if (__indexOf.call(eventsToTrack, "fullscreen") >= 0) {
+        return this.on("fullscreenchange", fullscreen);
+      }
+    });
   });
 
 }).call(this);

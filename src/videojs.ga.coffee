@@ -80,7 +80,7 @@ videojs.plugin 'ga', (options = {}) ->
     currentTime = Math.round(@currentTime())
     if currentTime > 0 && !seeking
       sendbeacon( 'play', true, currentTime )
-    seeking = true
+    seeking = false
     return
 
   pause = ->
@@ -128,13 +128,14 @@ videojs.plugin 'ga', (options = {}) ->
       console.log("Google Analytics not detected")
     return
 
-  @on("loadedmetadata", loaded)
-  @on("timeupdate", timeupdate)
-  @on("ended", end) if "end" in eventsToTrack
-  @on("play", play) if "play" in eventsToTrack
-  @on("pause", pause) if "pause" in eventsToTrack
-  @on("volumechange", volumeChange) if "volumeChange" in eventsToTrack
-  @on("resize", resize) if "resize" in eventsToTrack
-  @on("error", error) if "error" in eventsToTrack
-  @on("fullscreenchange", fullscreen) if "fullscreen" in eventsToTrack
+  @ready ->
+    @on("loadedmetadata", loaded)
+    @on("timeupdate", timeupdate)
+    @on("ended", end) if "end" in eventsToTrack
+    @on("play", play) if "play" in eventsToTrack
+    @on("pause", pause) if "pause" in eventsToTrack
+    @on("volumechange", volumeChange) if "volumeChange" in eventsToTrack
+    @on("resize", resize) if "resize" in eventsToTrack
+    @on("error", error) if "error" in eventsToTrack
+    @on("fullscreenchange", fullscreen) if "fullscreen" in eventsToTrack
   return
