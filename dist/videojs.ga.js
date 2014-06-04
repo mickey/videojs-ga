@@ -67,9 +67,7 @@
     play = function() {
       var currentTime;
       currentTime = Math.round(this.currentTime());
-      if (currentTime > 0 && !seeking) {
-        sendbeacon('play', true, currentTime);
-      }
+      sendbeacon('play', true, currentTime);
       seeking = false;
     };
     pause = function() {

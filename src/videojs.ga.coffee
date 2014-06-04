@@ -72,8 +72,7 @@ videojs.plugin 'ga', (options = {}) ->
 
   play = ->
     currentTime = Math.round(@currentTime())
-    if currentTime > 0 && !seeking
-      sendbeacon( 'play', true, currentTime )
+    sendbeacon( 'play', true, currentTime )
     seeking = false
     return
 
@@ -109,6 +108,7 @@ videojs.plugin 'ga', (options = {}) ->
     return
 
   sendbeacon = ( action, nonInteraction, value ) ->
+    # console.log action, " ", nonInteraction, " ", value
     if window.ga
       ga 'send', 'event',
         'eventCategory' 	: eventCategory
