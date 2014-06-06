@@ -101,7 +101,7 @@ videojs.plugin 'ga', (options = {}) ->
 
   fullscreen = ->
     currentTime = Math.round(@currentTime())
-    if @isFullscreen()
+    if @isFullscreen?() || @isFullScreen?()
       sendbeacon( 'enter fullscreen', false, currentTime )
     else
       sendbeacon( 'exit fullscreen', false, currentTime )

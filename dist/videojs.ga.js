@@ -1,5 +1,5 @@
 /*
-* videojs-ga - v0.4.0 - 2014-06-04
+* videojs-ga - v0.4.0 - 2014-06-06
 * Copyright (c) 2014 Michael Bensoussan
 * Licensed MIT
 */
@@ -94,7 +94,7 @@
     fullscreen = function() {
       var currentTime;
       currentTime = Math.round(this.currentTime());
-      if (this.isFullscreen()) {
+      if ((typeof this.isFullscreen === "function" ? this.isFullscreen() : void 0) || (typeof this.isFullScreen === "function" ? this.isFullScreen() : void 0)) {
         sendbeacon('enter fullscreen', false, currentTime);
       } else {
         sendbeacon('exit fullscreen', false, currentTime);
