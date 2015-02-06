@@ -1,6 +1,6 @@
 /*
-* videojs-ga - v0.4.1 - 2014-06-06
-* Copyright (c) 2014 Michael Bensoussan
+* videojs-ga - v0.4.2 - 2015-02-06
+* Copyright (c) 2015 Michael Bensoussan
 * Licensed MIT
 */
 (function() {
@@ -23,6 +23,7 @@
     percentsPlayedInterval = options.percentsPlayedInterval || dataSetupOptions.percentsPlayedInterval || 10;
     eventCategory = options.eventCategory || dataSetupOptions.eventCategory || 'Video';
     eventLabel = options.eventLabel || dataSetupOptions.eventLabel;
+    options.debug = options.debug || false;
     percentsAlreadyTracked = [];
     seekStart = seekEnd = 0;
     seeking = false;
@@ -111,7 +112,7 @@
         });
       } else if (window._gaq) {
         _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction]);
-      } else {
+      } else if (options.debug) {
         console.log("Google Analytics not detected");
       }
     };
@@ -140,6 +141,9 @@
         return this.on("fullscreenchange", fullscreen);
       }
     });
+    return {
+      'sendbeacon': sendbeacon
+    };
   });
 
 }).call(this);
