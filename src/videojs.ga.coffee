@@ -25,6 +25,9 @@ videojs.plugin 'ga', (options = {}) ->
   # if you didn't specify a name, it will be 'guessed' from the video src after metadatas are loaded
   eventLabel = options.eventLabel || dataSetupOptions.eventLabel
 
+  # if debug isn't specified
+  options.debug = options.debug || false
+
   # init a few variables
   percentsAlreadyTracked = []
   seekStart = seekEnd = 0
@@ -118,7 +121,7 @@ videojs.plugin 'ga', (options = {}) ->
         'nonInteraction'	: nonInteraction
     else if window._gaq
       _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction])
-    else
+    else if options.debug
       console.log("Google Analytics not detected")
     return
 
@@ -132,4 +135,5 @@ videojs.plugin 'ga', (options = {}) ->
     @on("resize", resize) if "resize" in eventsToTrack
     @on("error", error) if "error" in eventsToTrack
     @on("fullscreenchange", fullscreen) if "fullscreen" in eventsToTrack
-  return
+
+  return 'sendbeacon': sendbeacon
