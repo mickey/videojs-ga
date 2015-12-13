@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>videojs-ga DEMO Multiple videos on same page</title>
+    <link href="../libs/video-js-4.6.1/video-js.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="../libs/video-js-4.6.1/video.dev.js"></script>
+    <script src="../dist/videojs.ga.js"></script>
+  </head>
+
+  <body>
+    <video id="video" controls preload="none" class="video-js vjs-default-skin" width="640" height="480">
+      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+      <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+    </video>
+
+    <video id="video" controls preload="none" class="video-js vjs-default-skin" width="640" height="480">
+      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+      <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+    </video>
+
+    <script>
+
+      $('video').each(function() {
+        videojs(this.id, {}, function() {
+          this.ga();
+        });
+      })
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-XXXX-Y', { 'cookieDomain': 'none' });
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>

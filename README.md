@@ -74,6 +74,8 @@ If set to false, console logs will be ommited
 
 This plugin supports the ga.js and the newer analytics.js Google Analytics libraries. It autodetects the library you use.
 
+## See information in google
+To view the data on Google, access your account in analytics, in left panel click in Behavior > Events > Top Events.
 
 ## TODO
 
