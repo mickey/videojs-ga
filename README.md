@@ -1,5 +1,7 @@
 # videojs-ga
 
+LOOKING FOR A MAINTAINER: [I am looking for a maintainer for this project](https://github.com/mickey/videojs-ga/issues/30)
+
 Google Analytics plugin for video.js
 
 ## Getting Started
